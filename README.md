@@ -20,10 +20,57 @@ If you use MacOS just do
 
     npm install zmq-service-suite-client --save
 
-## ZSS Client
+## ZSS Client Usage
 
 ```javascript
 
+var ZSSClient = require('zmq-service-suite-client');
+
+var config = {
+  // broker frontend address
+  broker: 'tcp//127.0.0.1:7777',
+  // service unique identifier
+  sid: 'service-identifier',
+  // client identity (optional), defaults to 'client'
+  identity: "clientX",
+  // client timeout in ms (optional), defaults to 1s
+  timeout: 1000
+};
+
+var client = new ZSSClient(config);
+
+var verb = "service/action";
+var payload = "something";
+
+// call return a promise
+client.call(verb, payload)
+  .then(function(response, headers){
+    console.log("received payload =>", response);
+    console.log("received headers =>", headers);
+  });
+
+// fails the promise when service status is not 200
+client.call('foo')
+  .fail(function(error){
+    console.log("fail with code: %s and user message: %s and dev message %s"
+      error.code, error.userMessage, error.developerMessage);
+  });
+
+```
+
+### Options are optional and can be used to:
+
+#### Timeout request
+
+```javascript
+// it fails the promise
+client.call(verb, payload, { timeout: 1000 });
+```
+
+* pass request headers
+
+```javascript
+client.call(verb, payload, { headers: { something: "data" } });
 
 ```
 
