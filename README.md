@@ -44,9 +44,9 @@ var payload = "something";
 
 // call return a promise
 client.call(verb, payload)
-  .then(function(response, headers){
-    console.log("received payload =>", response);
-    console.log("received headers =>", headers);
+  .then(function(response){
+    console.log("received payload =>", response.payoad);
+    console.log("received headers =>", response.headers);
   });
 
 // fails the promise when service status is not 200
