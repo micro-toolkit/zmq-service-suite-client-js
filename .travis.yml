@@ -17,4 +17,4 @@ after_success:
 addons:
   code_climate:
     repo_token:
-      secure: eciYflzOdKXs0URbkspHm3tfGu86vo/xb9qyH9T6w1z/qd4hcuk6bTvGmU71XUwIRvlB7waDcjtysKlixEJ4pTOmMfE62qZt2QcIVnCnTY7hzGLVzExo6WNpUsr2jGSEyKtO7JfPMOjj7vhuyjDx8dKsbWhQQQhcmeaowJY2zDg=
+      secure: RfBkCMecHBDjc53d4qjjDyZpgY8TCR8L3UnDT5HrMYrzSEar66C9jbvDgdNZpnTe/tzQD16mTdDWW0u1MfAn5eH71kNhZXyvbBLmJZeErqOJZ15/ZRPrZjgAeAccUCCvsMDukgoxfLnxdC1Y0KRznnw27UzXTPWne/BChwKHXuo=
