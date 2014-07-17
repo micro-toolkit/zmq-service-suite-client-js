@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+(function(){
+
+  var ZSSClient = require('../client');
+
+  var config = {
+    // broker frontend address
+    broker: 'tcp://127.0.0.1:7777',
+    // service unique identifier
+    sid: 'PONG',
+    // client identity (optional), defaults to 'client'
+    identity: "PONG_CLIENT",
+    // client timeout in ms (optional), defaults to 1s
+    timeout: 1000
+  };
+
+  console.log("starting with ", config);
+
+  var client = new ZSSClient(config);
+
+  setInterval(function(){
+
+    console.log("sending ping...");
+
+    // call return a promise
+    client.call("ping", "ping")
+      .then(function(response){
+        console.log("received =>", response);
+      })
+      .fail(function(error){
+        console.log("error =>", error);
+      });
+  }, 1000);
+
+})();
