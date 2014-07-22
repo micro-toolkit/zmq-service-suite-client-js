@@ -52,7 +52,7 @@ client.call(verb, payload)
 // fails the promise when service status is not 200
 client.call('foo')
   .fail(function(error){
-    console.log("fail with code: %s and user message: %s and dev message %s"
+    console.log("fail with code: %s and user message: %s and dev message %s",
       error.code, error.userMessage, error.developerMessage);
   });
 
