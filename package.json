@@ -34,6 +34,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-env": "~0.4.1",
     "grunt-jasmine-node-coverage-validation": "0.0.4",
+    "logger-facade-console-plugin-nodejs": "0.0.3",
     "pre-git": "0.0.16"
   },
   "dependencies": {

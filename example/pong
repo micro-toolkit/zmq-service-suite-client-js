@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 (function(){
   var Logger = require('logger-facade-nodejs');
-  // this package is not required on this package
-  // install package on global and uncomment to test
-  // var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
+  var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
 
-  // var plugin = new LoggerConsolePlugin(config);
-  // Logger.use(plugin);
+  // this is the default config
+  var config = {
+    level: 'trace',
+    timeFormat: 'YYYY-MM-DD HH:mm:ss',
+    messageFormat: '%time | %logger::%level - %msg'
+  };
+
+  var plugin = new LoggerConsolePlugin(config);
+  Logger.use(plugin);
 
   var ZSSClient = require('../client');
 
@@ -21,7 +26,7 @@
     timeout: 1000
   };
 
-  console.log("starting with ", config);
+  console.log("starting with \n%j", config);
 
   var client = new ZSSClient(config);
 
@@ -32,10 +37,10 @@
     // call return a promise
     client.call("ping", "ping")
       .then(function(response){
-        console.log("received =>", response);
+        console.log("received => %j", response);
       })
       .fail(function(error){
-        console.log("error =>", error);
+        console.log("error => ", error);
       });
   }, 1000);
 
