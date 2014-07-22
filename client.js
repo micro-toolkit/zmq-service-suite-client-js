@@ -16,18 +16,24 @@
 
   var ZSSClient = function(configuration) {
 
+    var log = Logger.getLogger('ZSSClient');
+
     var config = _.defaults(configuration, defaults);
 
     var getConnectedSocket = function() {
       var socket = zmq.socket('dealer');
       socket.identity = config.identity + "#" + uuid.v1();
       socket.linger = 0;
+
+      log.debug("connecting to: %s", socket.identity);
+
       socket.connect(config.broker);
       return socket;
     };
 
     var onMessage = function(dfd, frames) {
       var msg = Message.parse(frames);
+      log.debug("received message %s", msg);
 
       if(msg.status === 200){
         dfd.resolve({
@@ -42,6 +48,7 @@
     };
 
     var onError = function(dfd, error){
+      log.error("Unexpected error occurred: ", error);
       dfd.reject(errors["500"]);
     };
 
@@ -68,13 +75,17 @@
         socket.close();
       });
 
+      var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
+
       setTimeout(function() {
+        log.debug("Promise for message %s rejected by timeout!", message.rid);
         dfd.reject(errors["599"]);
       }, options.timeout);
 
-      var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
       message.headers = options.headers;
       message.payload = payload;
+
+      log.debug("Sending message. %s", message);
 
       var frames = message.toFrames();
       // remove identity
