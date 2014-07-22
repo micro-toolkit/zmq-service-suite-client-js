@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 (function(){
+  var Logger = require('logger-facade-nodejs');
+  // this package is not required on this package
+  // install package on global and uncomment to test
+  // var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
+
+  // var plugin = new LoggerConsolePlugin(config);
+  // Logger.use(plugin);
 
   var ZSSClient = require('../client');
 
