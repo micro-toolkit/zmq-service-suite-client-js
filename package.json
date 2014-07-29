@@ -37,9 +37,11 @@
     "logger-facade-console-plugin-nodejs": "0.0.3",
     "pre-git": "0.0.16"
   },
+  "peerDependencies": {
+    "logger-facade-nodejs": ">=0.0.2"
+  },
   "dependencies": {
     "lodash": "^2.4.1",
-    "logger-facade-nodejs": "0.0.2",
     "q": "^1.0.1",
     "uuid": "~1.4.1",
     "zmq": "^2.7.0",
