@@ -74,6 +74,11 @@ client.call(verb, payload, { headers: { something: "data" } });
 
 ```
 
+## NOTES
+
+The client library have a peer dependency to logger-facade-nodejs, the module used for logging.
+
+
 ## Contributing
 
 1. Fork it
