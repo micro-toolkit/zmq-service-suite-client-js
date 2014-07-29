@@ -28,7 +28,7 @@ var ZSSClient = require('zmq-service-suite-client');
 
 var config = {
   // broker frontend address
-  broker: 'tcp//127.0.0.1:7777',
+  broker: 'tcp://127.0.0.1:7777',
   // service unique identifier
   sid: 'service-identifier',
   // client identity (optional), defaults to 'client'
@@ -45,7 +45,7 @@ var payload = "something";
 // call return a promise
 client.call(verb, payload)
   .then(function(response){
-    console.log("received payload =>", response.payoad);
+    console.log("received payload =>", response.payload);
     console.log("received headers =>", response.headers);
   });
 
