@@ -6,6 +6,8 @@
 
 ## ZMQ Service Oriented Suite - Node-js Client
 
+[![NPM version](https://badge.fury.io/js/zmq-service-suite-client.svg)](http://badge.fury.io/js/zmq-service-suite-client)
+
 This project is a node-js client implementation for [ZMQ Service Suite](http://pjanuario.github.io/zmq-service-suite-specs/).
 
 **0MQ Install**
