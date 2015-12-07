@@ -1,47 +1,44 @@
 #!/usr/bin/env node
-(function(){
-  var Logger = require('logger-facade-nodejs');
-  var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
+var Logger = require('logger-facade-nodejs');
+var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
 
-  // this is the default config
-  var config = {
-    level: 'trace',
-    timeFormat: 'YYYY-MM-DD HH:mm:ss',
-    messageFormat: '%time | %logger::%level - %msg'
-  };
+// this is the default config
+var config = {
+  level: 'trace',
+  timeFormat: 'YYYY-MM-DD HH:mm:ss',
+  messageFormat: '%time | %logger::%level - %msg'
+};
 
-  var plugin = new LoggerConsolePlugin(config);
-  Logger.use(plugin);
+var plugin = new LoggerConsolePlugin(config);
+Logger.use(plugin);
 
-  var ZSSClient = require('../client');
+var ZSSClient = require('../client');
 
-  var config = {
-    // broker frontend address
-    broker: 'tcp://127.0.0.1:7777',
-    // service unique identifier
-    sid: 'PONG',
-    // client identity (optional), defaults to 'client'
-    identity: "PONG_CLIENT",
-    // client timeout in ms (optional), defaults to 1s
-    timeout: 1000
-  };
+var config = {
+  // broker frontend address
+  broker: 'tcp://127.0.0.1:7777',
+  // service unique identifier
+  sid: 'PONG',
+  // client identity (optional), defaults to 'client'
+  identity: "PONG_CLIENT",
+  // client timeout in ms (optional), defaults to 1s
+  timeout: 1000
+};
 
-  console.log("starting with \n%j", config);
+console.log("starting with \n%j", config);
 
-  var client = new ZSSClient(config);
+var client = new ZSSClient(config);
 
-  setInterval(function(){
+setInterval(function(){
 
-    console.log("sending ping...");
+  console.log("sending ping...");
 
-    // call return a promise
-    client.call("ping", "ping")
-      .then(function(response){
-        console.log("received => %j", response);
-      })
-      .fail(function(error){
-        console.log("error => ", error);
-      });
-  }, 1000);
-
-})();
+  // call return a promise
+  client.call("ping", "ping")
+    .then(function(response){
+      console.log("received => %j", response);
+    })
+    .fail(function(error){
+      console.log("error => ", error);
+    });
+}, 2000);
