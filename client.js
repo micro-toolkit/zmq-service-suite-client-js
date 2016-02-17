@@ -13,6 +13,22 @@ var defaults = {
   headers: {}
 };
 
+function getStatusCodeClass(code){
+  return parseInt(code/100);
+}
+
+function isValidErrorCode(code){
+  var validErrorCode = code >= 400 && code && code < 600;
+  if (!validErrorCode) { return false; }
+  var statusCodeClass = getStatusCodeClass(code);
+  return statusCodeClass === 4 || statusCodeClass === 5;
+}
+
+function isValidErrorContract(error){
+  return error && isValidErrorCode(error.code);
+}
+
+
 var ZSSClient = function(configuration) {
 
   var log = Logger.getLogger('ZSSClient');
@@ -35,15 +51,18 @@ var ZSSClient = function(configuration) {
     log.debug("received message %s", msg);
 
     if(msg.status === 200){
-      dfd.resolve({
+      return dfd.resolve({
         payload: msg.payload,
         headers: msg.headers
       });
     }
-    else {
-      var error = errors[msg.status.toString()];
-      dfd.reject(error);
+
+    if (isValidErrorContract(msg.payload)) {
+      return dfd.reject(msg.payload);
     }
+
+    var error = errors[msg.status.toString()] || errors["500"];
+    dfd.reject(error);
   };
 
   var onError = function(dfd, error){
