@@ -2,10 +2,12 @@ jasmine.getEnv().defaultTimeoutInterval = 2000;
 
 describe('ZSS Client', function() {
   var Client = require('../../client');
+  var errors = require('../../config/errors');
   var zmq = require('zmq');
   var uuid = require('uuid');
   var Message = require('zmq-service-suite-message');
   var Q = require('q');
+  var _ = require('lodash');
 
   var config = {
     broker: 'ipc://tmp/test',
@@ -193,27 +195,93 @@ describe('ZSS Client', function() {
     });
 
     describe('on error', function(){
+      describe('when it receives a error payload', function(){
+        var msg;
+        beforeEach(function(){
+          msg = new Message('sid', 'verb');
+          msg.type = Message.Type.REP;
 
-      it('rejects the promise with the specified error', function(done) {
-        var msg = new Message('sid', 'verb');
-        msg.type = Message.Type.REP;
-        msg.status = 500;
-
-        spyOn(zmq, 'socket').andReturn({
-          connect: Function.apply(),
-          send: Function.apply(),
-          on: function(type, callback) {
-            if (type === 'message') {
-              callback.apply(null, msg.toFrames());
+          spyOn(zmq, 'socket').andReturn({
+            connect: Function.apply(),
+            send: Function.apply(),
+            on: function(type, callback) {
+              if (type === 'message') {
+                callback.apply(null, msg.toFrames());
+              }
             }
-          }
+          });
         });
 
-        client.call('foo')
-          .fail(function(error){
-            expect(error.code).toBe(500);
-            done();
+        it('rejects the promise with the default 500 error', function(done) {
+          msg.status = 500;
+          client.call('foo')
+            .fail(function(error){
+              expect(error.code).toBe(500);
+              expect(error.userMessage).toBe(errors["500"].userMessage);
+              expect(error.developerMessage).toBe(errors["500"].developerMessage);
+              done();
+            });
+        });
+
+        describe('handles errors retrieved by the service', function(){
+          it('rejects the promise with the 4xx error', function(done) {
+            var serviceError = _.cloneDeep(errors["404"]);
+            serviceError.developerMessage = "some usefull message";
+            msg.status = 404;
+            msg.payload = serviceError;
+
+            client.call('foo')
+              .fail(function(error){
+                expect(error.code).toBe(404);
+                expect(error.userMessage).toBe(serviceError.userMessage);
+                expect(error.developerMessage).toBe(serviceError.developerMessage);
+                done();
+              });
           });
+
+          it('rejects the promise with the 5xx error', function(done) {
+            var serviceError = _.cloneDeep(errors["599"]);
+            serviceError.developerMessage = "some usefull message";
+            msg.status = 599;
+            msg.payload = serviceError;
+
+            client.call('foo')
+              .fail(function(error){
+                expect(error.code).toBe(599);
+                expect(error.userMessage).toBe(serviceError.userMessage);
+                expect(error.developerMessage).toBe(serviceError.developerMessage);
+                done();
+              });
+          });
+
+          describe('when error contract isnt valid', function(){
+
+            it('rejects the promise with the default error for status', function(done) {
+              msg.status = 404;
+              msg.payload = {};
+              client.call('foo')
+                .fail(function(error){
+                  expect(error.code).toBe(404);
+                  expect(error.userMessage).toBe(errors["404"].userMessage);
+                  expect(error.developerMessage).toBe(errors["404"].developerMessage);
+                  done();
+                });
+            });
+          });
+
+          it('rejects the promise with the default 500 if status not in errors', function(done) {
+            msg.status = 409;
+            msg.payload = {};
+
+            client.call('foo')
+              .fail(function(error){
+                expect(error.code).toBe(500);
+                expect(error.userMessage).toBe(errors["500"].userMessage);
+                expect(error.developerMessage).toBe(errors["500"].developerMessage);
+                done();
+              });
+          });
+        });
       });
 
       it('fails the promise with the 500 error when the "error" callback is executed', function(done) {
