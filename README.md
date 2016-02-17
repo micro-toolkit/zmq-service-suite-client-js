@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pjanuario/zmq-service-suite-client-js.svg?branch=master)](https://travis-ci.org/pjanuario/zmq-service-suite-client-js)
+[![Build Status](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js.svg?branch=master)](https://travis-ci.org/pjanuario/zmq-service-suite-client-js)
 [![Code Climate](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js.png)](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js)
 [![Coverage](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js/coverage.png)](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js)
 [![Dependency Status](https://gemnasium.com/pjanuario/zmq-service-suite-client-js.svg)](https://gemnasium.com/pjanuario/zmq-service-suite-client-js)
