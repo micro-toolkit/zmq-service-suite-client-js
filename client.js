@@ -108,12 +108,14 @@ function call(config, verb, payload, options) {
   return promise;
 }
 
-var ZSSClient = function(configuration) {
+function ZSSClient(configuration) {
   var config = _.defaults(configuration, defaults);
 
-  this.call = function(verb, payload, options) {
-    return call(config, verb, payload, options);
+  return {
+    call: function(verb, payload, options) {
+      return call(config, verb, payload, options);
+    }
   };
-};
+}
 
 module.exports = ZSSClient;
