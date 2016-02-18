@@ -4,7 +4,8 @@ var Q = require('q'),
     _ = require('lodash'),
     errors = require('./config/errors'),
     Message = require('zmq-service-suite-message'),
-    Logger = require('logger-facade-nodejs');
+    Logger = require('logger-facade-nodejs'),
+    log = Logger.getLogger('ZSSClient');
 
 // defaults
 var defaults = {
@@ -28,23 +29,20 @@ function isValidErrorContract(error){
   return error && isValidErrorCode(error.code);
 }
 
+function getConnectedSocket(config) {
+  var socket = zmq.socket('dealer');
+  socket.identity = config.identity + "#" + uuid.v1();
+  socket.linger = 0;
+
+  log.debug("connecting to: %s", socket.identity);
+
+  socket.connect(config.broker);
+  return socket;
+}
 
 var ZSSClient = function(configuration) {
 
-  var log = Logger.getLogger('ZSSClient');
-
   var config = _.defaults(configuration, defaults);
-
-  var getConnectedSocket = function() {
-    var socket = zmq.socket('dealer');
-    socket.identity = config.identity + "#" + uuid.v1();
-    socket.linger = 0;
-
-    log.debug("connecting to: %s", socket.identity);
-
-    socket.connect(config.broker);
-    return socket;
-  };
 
   var onMessage = function(dfd, frames) {
     var msg = Message.parse(frames);
@@ -74,7 +72,7 @@ var ZSSClient = function(configuration) {
     var dfd = Q.defer(),
       promise = dfd.promise;
 
-    var socket = getConnectedSocket();
+    var socket = getConnectedSocket(config);
 
     options = _.defaults({}, options, config);
 
