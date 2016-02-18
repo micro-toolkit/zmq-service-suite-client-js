@@ -45,28 +45,28 @@ function onError(dfd, error){
   dfd.reject(errors["500"]);
 }
 
+function onMessage(dfd, frames) {
+  var msg = Message.parse(frames);
+  log.debug("received message %s", msg);
+
+  if(msg.status === 200){
+    return dfd.resolve({
+      payload: msg.payload,
+      headers: msg.headers
+    });
+  }
+
+  if (isValidErrorContract(msg.payload)) {
+    return dfd.reject(msg.payload);
+  }
+
+  var error = errors[msg.status.toString()] || errors["500"];
+  dfd.reject(error);
+}
+
 var ZSSClient = function(configuration) {
 
   var config = _.defaults(configuration, defaults);
-
-  var onMessage = function(dfd, frames) {
-    var msg = Message.parse(frames);
-    log.debug("received message %s", msg);
-
-    if(msg.status === 200){
-      return dfd.resolve({
-        payload: msg.payload,
-        headers: msg.headers
-      });
-    }
-
-    if (isValidErrorContract(msg.payload)) {
-      return dfd.reject(msg.payload);
-    }
-
-    var error = errors[msg.status.toString()] || errors["500"];
-    dfd.reject(error);
-  };
 
   this.call = function(verb, payload, options) {
     var dfd = Q.defer(),
