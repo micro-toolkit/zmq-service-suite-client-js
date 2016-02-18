@@ -40,6 +40,11 @@ function getConnectedSocket(config) {
   return socket;
 }
 
+function onError(dfd, error){
+  log.error("Unexpected error occurred: ", error);
+  dfd.reject(errors["500"]);
+}
+
 var ZSSClient = function(configuration) {
 
   var config = _.defaults(configuration, defaults);
@@ -61,11 +66,6 @@ var ZSSClient = function(configuration) {
 
     var error = errors[msg.status.toString()] || errors["500"];
     dfd.reject(error);
-  };
-
-  var onError = function(dfd, error){
-    log.error("Unexpected error occurred: ", error);
-    dfd.reject(errors["500"]);
   };
 
   this.call = function(verb, payload, options) {
