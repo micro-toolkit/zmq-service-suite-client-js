@@ -64,6 +64,26 @@ function onMessage(dfd, frames) {
   dfd.reject(error);
 }
 
+function sendMessage(socket, dfd, verb, payload, options){
+  var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
+
+  setTimeout(function() {
+    log.debug("Promise for message %s rejected by timeout!", message.rid);
+    dfd.reject(errors["599"]);
+  }, options.timeout);
+
+  message.headers = options.headers;
+  message.payload = payload;
+
+  log.debug("Sending message. %s", message);
+
+  var frames = message.toFrames();
+  // remove identity
+  frames.shift();
+
+  socket.send(frames);
+}
+
 function call(config, verb, payload, options) {
   var dfd = Q.defer(),
     promise = dfd.promise;
@@ -87,23 +107,7 @@ function call(config, verb, payload, options) {
     socket.close();
   });
 
-  var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
-
-  setTimeout(function() {
-    log.debug("Promise for message %s rejected by timeout!", message.rid);
-    dfd.reject(errors["599"]);
-  }, options.timeout);
-
-  message.headers = options.headers;
-  message.payload = payload;
-
-  log.debug("Sending message. %s", message);
-
-  var frames = message.toFrames();
-  // remove identity
-  frames.shift();
-
-  socket.send(frames);
+  sendMessage(socket, dfd, verb, payload, options);
 
   return promise;
 }
