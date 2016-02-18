@@ -108,7 +108,7 @@ function call(config, verb, payload, options) {
   return promise;
 }
 
-function ZSSClient(configuration) {
+function client(configuration) {
   var config = _.defaults(configuration, defaults);
 
   return {
@@ -118,4 +118,4 @@ function ZSSClient(configuration) {
   };
 }
 
-module.exports = ZSSClient;
+module.exports = client;
