@@ -64,54 +64,56 @@ function onMessage(dfd, frames) {
   dfd.reject(error);
 }
 
-var ZSSClient = function(configuration) {
+function call(config, verb, payload, options) {
+  var dfd = Q.defer(),
+    promise = dfd.promise;
 
+  var socket = getConnectedSocket(config);
+
+  options = _.defaults({}, options, config);
+
+  socket.on('message', function(){
+    var frames = _.toArray(arguments);
+    var defer = dfd;
+    onMessage(defer, frames);
+  });
+
+  socket.on('error', function(error){
+    var defer = dfd;
+    onError(defer, error);
+  });
+
+  promise.finally(function() {
+    socket.close();
+  });
+
+  var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
+
+  setTimeout(function() {
+    log.debug("Promise for message %s rejected by timeout!", message.rid);
+    dfd.reject(errors["599"]);
+  }, options.timeout);
+
+  message.headers = options.headers;
+  message.payload = payload;
+
+  log.debug("Sending message. %s", message);
+
+  var frames = message.toFrames();
+  // remove identity
+  frames.shift();
+
+  socket.send(frames);
+
+  return promise;
+}
+
+var ZSSClient = function(configuration) {
   var config = _.defaults(configuration, defaults);
 
   this.call = function(verb, payload, options) {
-    var dfd = Q.defer(),
-      promise = dfd.promise;
-
-    var socket = getConnectedSocket(config);
-
-    options = _.defaults({}, options, config);
-
-    socket.on('message', function(){
-      var frames = _.toArray(arguments);
-      var defer = dfd;
-      onMessage(defer, frames);
-    });
-
-    socket.on('error', function(error){
-      var defer = dfd;
-      onError(defer, error);
-    });
-
-    promise.finally(function() {
-      socket.close();
-    });
-
-    var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
-
-    setTimeout(function() {
-      log.debug("Promise for message %s rejected by timeout!", message.rid);
-      dfd.reject(errors["599"]);
-    }, options.timeout);
-
-    message.headers = options.headers;
-    message.payload = payload;
-
-    log.debug("Sending message. %s", message);
-
-    var frames = message.toFrames();
-    // remove identity
-    frames.shift();
-
-    socket.send(frames);
-
-    return promise;
+    return call(config, verb, payload, options);
   };
-
 };
 
 module.exports = ZSSClient;
