@@ -1,14 +1,15 @@
-[![Build Status](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js.svg?branch=master)](https://travis-ci.org/pjanuario/zmq-service-suite-client-js)
-[![Code Climate](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js.png)](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js)
-[![Coverage](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js/coverage.png)](https://codeclimate.com/github/pjanuario/zmq-service-suite-client-js)
-[![Dependency Status](https://gemnasium.com/pjanuario/zmq-service-suite-client-js.svg)](https://gemnasium.com/pjanuario/zmq-service-suite-client-js)
+[![Build Status](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js.svg?branch=master)](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js)
+[![Code Climate](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
+[![Coverage](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/coverage.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
+[![Issue Count](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/badges/issue_count.svg)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
+[![Dependency Status](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js.svg)](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js)
 ![Grunt](https://cdn.gruntjs.com/builtwith.png)
 
 ## ZMQ Service Oriented Suite - Node-js Client
 
 [![NPM version](https://badge.fury.io/js/zmq-service-suite-client.svg)](http://badge.fury.io/js/zmq-service-suite-client)
 
-This project is a node-js client implementation for [ZMQ Service Suite](http://pjanuario.github.io/zmq-service-suite-specs/).
+This project is a node-js client implementation for [ZMQ Service Suite](http://micro-toolkit.github.io/zmq-service-suite-specs/).
 
 **0MQ Install**
 
