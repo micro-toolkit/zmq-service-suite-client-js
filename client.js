@@ -67,7 +67,7 @@ function onMessage(dfd, frames) {
 function sendMessage(socket, dfd, verb, payload, options){
   var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
 
-  setTimeout(function() {
+  var timeout = setTimeout(function() {
     log.debug("Promise for message %s rejected by timeout!", message.rid);
     dfd.reject(errors["599"]);
   }, options.timeout);
@@ -82,6 +82,8 @@ function sendMessage(socket, dfd, verb, payload, options){
   frames.shift();
 
   socket.send(frames);
+
+  return timeout;
 }
 
 function call(config, verb, payload, options) {
@@ -92,10 +94,14 @@ function call(config, verb, payload, options) {
 
   options = _.defaults({}, options, config);
 
+  var timeout;
+
   socket.on('message', function(){
     var frames = _.toArray(arguments);
     var defer = dfd;
     onMessage(defer, frames);
+    clearTimeout(timeout);
+    timeout = null;
   });
 
   socket.on('error', function(error){
@@ -107,7 +113,7 @@ function call(config, verb, payload, options) {
     socket.close();
   });
 
-  sendMessage(socket, dfd, verb, payload, options);
+  timeout = sendMessage(socket, dfd, verb, payload, options);
 
   return promise;
 }
