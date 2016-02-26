@@ -1,6 +1,6 @@
 {
   "name": "zmq-service-suite-client",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "0MQ Service oriented Suite Client",
   "main": "client.js",
   "scripts": {
