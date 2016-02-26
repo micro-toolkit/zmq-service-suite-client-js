@@ -1,12 +1,13 @@
-sudo: false
+sudo: required
+dist: trusty
+cache:
+  apt: true
 language: node_js
 services:
 node_js:
   - 0.10
   - 0.12
   - 4
-env:
-  - CXX=g++-4.8
 before_script:
   - npm install -g codeclimate-test-reporter
   - npm install -g grunt-cli
@@ -20,10 +21,7 @@ after_success:
   - codeclimate-test-reporter < ./coverage/lcov.info
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
       - libzmq3-dev
   code_climate:
     repo_token:
