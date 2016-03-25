@@ -47,7 +47,7 @@ function onError(dfd, error){
 
 function onMessage(dfd, frames) {
   var msg = Message.parse(frames);
-  log.debug(msg, "Received message from %s with id %s to %j with status %s", msg.identity, msg.rid, msg.address, msg.status);
+  log.info(msg, "Received message with id %s from %j with status %s", msg.rid, msg.address, msg.status);
 
   if(msg.status === 200){
     return dfd.resolve({
