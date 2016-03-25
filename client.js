@@ -18,6 +18,10 @@ function getStatusCodeClass(code){
   return parseInt(code/100);
 }
 
+function isSuccessStatusCode(code){
+  return getStatusCodeClass(code) === 2;
+}
+
 function isValidErrorCode(code){
   var validErrorCode = code >= 400 && code && code < 600;
   if (!validErrorCode) { return false; }
@@ -49,10 +53,11 @@ function onMessage(dfd, frames) {
   var msg = Message.parse(frames);
   log.info(msg, "Received message with id %s from %j with status %s", msg.rid, msg.address, msg.status);
 
-  if(msg.status === 200){
+  if (isSuccessStatusCode(msg.status)) {
     return dfd.resolve({
       payload: msg.payload,
-      headers: msg.headers
+      headers: msg.headers,
+      status:  msg.status
     });
   }
 

@@ -153,7 +153,6 @@ describe('ZSS Client', function() {
     });
 
     describe('on success', function(){
-
       var msg;
 
       beforeEach(function(){
@@ -174,8 +173,24 @@ describe('ZSS Client', function() {
         });
       });
 
-      it('resolves the promise with the payload', function(done) {
+      it('resolves the promise with the msg status 200', function(done) {
+        client.call('foo')
+          .then(function(response){
+            expect(response.status).toEqual(200);
+            done();
+          });
+      });
 
+      it('resolves the promise with different success status code', function(done) {
+        msg.status = 204;
+        client.call('foo')
+          .then(function(response){
+            expect(response.status).toEqual(204);
+            done();
+          });
+      });
+
+      it('resolves the promise with the payload', function(done) {
         client.call('foo')
           .then(function(response){
             expect(response.payload).toEqual(msg.payload);
@@ -184,14 +199,12 @@ describe('ZSS Client', function() {
       });
 
       it('resolves the promise with the headers', function(done) {
-
         client.call('foo')
           .then(function(response, headers){
             expect(response.headers).toEqual(msg.headers);
             done();
           });
       });
-
     });
 
     describe('on error', function(){
