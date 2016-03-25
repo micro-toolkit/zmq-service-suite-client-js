@@ -68,14 +68,14 @@ function sendMessage(socket, dfd, verb, payload, options){
   var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
 
   var timeout = setTimeout(function() {
-    log.debug(message, "Promise for message %s rejected by timeout!", message.rid);
+    log.info(message, "Call to %j with id %s ended with timeout!", message.address, message.rid);
     dfd.reject(errors["599"]);
   }, options.timeout);
 
   message.headers = options.headers;
   message.payload = payload;
 
-  log.debug(message, "Sending message from %s with id %s to %j", message.identity, message.rid, message.address);
+  log.info(message, "Sending message with id %s to %j", message.rid, message.address);
 
   var frames = message.toFrames();
   // remove identity
