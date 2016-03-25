@@ -47,7 +47,7 @@ function onError(dfd, error){
 
 function onMessage(dfd, frames) {
   var msg = Message.parse(frames);
-  log.debug("received message %s", msg);
+  log.info(msg, "Received message with id %s from %j with status %s", msg.rid, msg.address, msg.status);
 
   if(msg.status === 200){
     return dfd.resolve({
@@ -68,14 +68,14 @@ function sendMessage(socket, dfd, verb, payload, options){
   var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
 
   var timeout = setTimeout(function() {
-    log.debug("Promise for message %s rejected by timeout!", message.rid);
+    log.info(message, "Call to %j with id %s ended with timeout!", message.address, message.rid);
     dfd.reject(errors["599"]);
   }, options.timeout);
 
   message.headers = options.headers;
   message.payload = payload;
 
-  log.debug("Sending message. %s", message);
+  log.info(message, "Sending message with id %s to %j", message.rid, message.address);
 
   var frames = message.toFrames();
   // remove identity
