@@ -19,6 +19,11 @@
     "userMessage": "The content you requested was not found.",
     "code": 404
   },
+   "422": {
+    "developerMessage": "The server was unable to process the instructions contained in the request.",
+    "userMessage": "The request you made is can not be handled. Please review your data.",
+    "code": 422
+  },
    "429": {
     "developerMessage": "You have sent too many requests in a given amount of time.",
     "userMessage": "Please wait a while before trying to access this content again",
