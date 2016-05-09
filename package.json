@@ -44,7 +44,7 @@
     "lodash": "^4.5.0",
     "q": "^1.0.1",
     "uuid": "^2.0.1",
-    "zmq": "^2.7.0",
+    "zmq": "2.14.x",
     "zmq-service-suite-message": "0.0.3"
   },
   "engines": {
