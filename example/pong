@@ -4,7 +4,7 @@ var LoggerConsolePlugin = require('logger-facade-console-plugin-nodejs');
 
 // this is the default config
 var config = {
-  level: 'trace',
+  level: 'debug',
   timeFormat: 'YYYY-MM-DD HH:mm:ss',
   messageFormat: '%time | %logger::%level - %msg | metadata: %metadata'
 };
@@ -25,20 +25,20 @@ var config = {
   timeout: 1000
 };
 
-console.log("starting with \n%j", config);
+console.log("----- Client Start with ---- \n %j \n----------", config);
 
 var client = new ZSSClient(config);
 
 setInterval(function(){
 
-  console.log("sending ping...");
+  console.log("----- Client Sending PING ----");
 
   // call return a promise
   client.call("ping", "ping")
     .then(function(response){
-      console.log("received => %j", response);
+      console.log("----- Client Received ----\n %j \n --------------------", response);
     })
     .fail(function(error){
-      console.log("error => ", error);
+      console.log("----- Client Received Error ----\n %j \n --------------------", error);
     });
 }, 2000);
