@@ -72,16 +72,22 @@ function onMessage(dfd, frames) {
 
 function sendMessage(socket, dfd, verb, payload, options){
   var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
-
-  var timeout = setTimeout(function() {
-    log.info(message, "Call to %j with id %s ended with timeout!", message.address, message.rid);
-    dfd.reject(errors["599"]);
-  }, options.timeout);
-
   message.headers = options.headers;
   message.payload = payload;
+  message.identity = socket.identity;
 
-  log.info(message, "Sending message with id %s to %j", message.rid, message.address);
+  var timeout = setTimeout(function() {
+    var error = errors["599"];
+    message.status = error.code;
+    message.payload = error;
+    log.info(message, "REP to %s:%s#%s with id %s ended with timeout after %s ms!",
+      message.address.sid, message.address.sversion, message.address.verb, message.rid,
+      options.timeout);
+    dfd.reject(message.payload);
+  }, options.timeout);
+
+  log.info(message, "Sending REQ with id %s to %s:%s#%s", message.rid,
+    message.address.sid, message.address.sversion, message.address.verb);
 
   var frames = message.toFrames();
   // remove identity
