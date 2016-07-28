@@ -5,7 +5,7 @@ var Q = require('q'),
     errors = require('./config/errors'),
     Message = require('zmq-service-suite-message'),
     Logger = require('logger-facade-nodejs'),
-    log = Logger.getLogger('ZSSClient');
+    log = Logger.getLogger('micro.client');
 
 // defaults
 var defaults = {
