@@ -45,7 +45,7 @@ function getConnectedSocket(config) {
 }
 
 function onError(dfd, error){
-  log.error("Unexpected error occurred: ", error);
+  log.error(error, "Unexpected error occurred: %s stack: %s", error, error.stack);
   dfd.reject(errors["500"]);
 }
 
