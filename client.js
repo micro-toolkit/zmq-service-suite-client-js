@@ -51,7 +51,8 @@ function onError(dfd, error){
 
 function onMessage(dfd, frames) {
   var msg = Message.parse(frames);
-  log.info(msg, "Received message with id %s from %j with status %s", msg.rid, msg.address, msg.status);
+  log.info(msg, "Received REP with id %s from %s:%s#%s with status %s", msg.rid,
+      msg.address.sid, msg.address.sversion, msg.address.verb, msg.status);
 
   if (isSuccessStatusCode(msg.status)) {
     return dfd.resolve({
