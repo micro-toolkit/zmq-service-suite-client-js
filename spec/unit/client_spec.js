@@ -303,7 +303,7 @@ describe('ZSS Client', function() {
           send: Function.apply(),
           on: function(type, callback) {
             if (type === 'error') {
-              callback(null);
+              callback(new Error('something happen'));
             }
           }
         });
