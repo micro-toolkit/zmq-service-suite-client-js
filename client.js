@@ -38,7 +38,7 @@ function getConnectedSocket(config) {
   socket.identity = config.identity + "#" + uuid.v1();
   socket.linger = 0;
 
-  log.debug("connecting to: %s", socket.identity);
+  log.trace("connecting as %s", socket.identity);
 
   socket.connect(config.broker);
   return socket;
