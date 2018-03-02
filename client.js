@@ -80,6 +80,7 @@ function sendMessage(socket, dfd, verb, payload, options){
     var error = errors["599"];
     message.status = error.code;
     message.payload = error;
+    message.type = Message.Type.REP;
     log.info(message, "REP to %s:%s#%s with id %s ended with timeout after %s ms!",
       message.address.sid, message.address.sversion, message.address.verb, message.rid,
       options.timeout);
