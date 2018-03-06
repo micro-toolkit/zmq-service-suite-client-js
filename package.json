@@ -42,10 +42,11 @@
   },
   "dependencies": {
     "lodash": "^4.14.0",
+    "moment": "^2.21.0",
     "q": "^1.4.1",
     "uuid": "^3.0.1",
     "zmq": "2.15.x",
-    "zmq-service-suite-message": "0.0.3"
+    "zmq-service-suite-message": "0.1.0"
   },
   "engines": {
     "node": ">=0.10.28"
