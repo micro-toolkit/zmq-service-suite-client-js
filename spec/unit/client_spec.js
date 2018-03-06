@@ -201,7 +201,7 @@ describe('ZSS Client', function() {
       it('resolves the promise with the headers', function(done) {
         client.call('foo')
           .then(function(response, headers){
-            expect(response.headers).toEqual(msg.headers);
+            expect(response.headers.something).toEqual(msg.headers.something);
             done();
           });
       });
