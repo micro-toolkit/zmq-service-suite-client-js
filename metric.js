@@ -12,6 +12,9 @@ var microHeaders = [
 
 // TODO: Add proper test to ensure the format of the metric, mocking logger was giving troubles
 function metric(name, ts, message) {
+  // val is not a NaN should log the metric
+  if (isNaN(ts)) { return message; }
+
   var metadata = _.pick(message, ['type', 'rid', 'address', 'status', 'client', 'clientId', 'transaction']);
   metadata['micrometric'] = { name: name, value: ts }
   log.info(metadata, 'Publishing metric "%s":%sms', name, ts);
