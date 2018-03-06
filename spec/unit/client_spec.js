@@ -167,7 +167,9 @@ describe('ZSS Client', function() {
           send: Function.apply(),
           on: function(type, callback) {
             if (type === 'message') {
-              callback.apply(null, msg.toFrames());
+              var frames = msg.toFrames();
+              frames.shift();
+              callback.apply(null, frames);
             }
           }
         });
@@ -219,7 +221,9 @@ describe('ZSS Client', function() {
             send: Function.apply(),
             on: function(type, callback) {
               if (type === 'message') {
-                callback.apply(null, msg.toFrames());
+                var frames = msg.toFrames();
+                frames.shift();
+                callback.apply(null, frames);
               }
             }
           });
