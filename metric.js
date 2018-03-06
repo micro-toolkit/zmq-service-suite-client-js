@@ -10,7 +10,7 @@ var microHeaders = [
   'micro.bbes', 'micro.bber'
 ];
 
-// TODO: Add proper test to ensure the format of the metric, mocking logger was giving troubles
+// Add Test: Add proper test to ensure the format of the metric, mocking logger was giving troubles
 function metric(name, ts, message) {
   // val is not a NaN should log the metric
   if (isNaN(ts)) { return message; }
