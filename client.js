@@ -49,7 +49,11 @@ function onError(dfd, error){
   dfd.reject(errors["500"]);
 }
 
-function onMessage(dfd, frames) {
+function onMessage(socket, dfd, frames) {
+  // when received the message have no identity we will push it with identify
+  // from the socket itself
+  frames.unshift(socket.identity);
+
   var msg = Message.parse(frames);
   log.info(msg, "Received REP with id %s from %s:%s#%s with status %s", msg.rid,
       msg.address.sid, msg.address.sversion, msg.address.verb, msg.status);
@@ -71,10 +75,11 @@ function onMessage(dfd, frames) {
 }
 
 function sendMessage(socket, dfd, verb, payload, options){
-  var message = new Message(options.sid.toUpperCase(), verb.toUpperCase());
-  message.headers = options.headers;
+  var message = new Message(
+    options.sid.toUpperCase(), verb.toUpperCase(),
+    null, socket.identity, options.headers);
+
   message.payload = payload;
-  message.identity = socket.identity;
 
   var timeout = setTimeout(function() {
     var error = errors["599"];
@@ -112,7 +117,7 @@ function call(config, verb, payload, options) {
   socket.on('message', function(){
     var frames = _.toArray(arguments);
     var defer = dfd;
-    onMessage(defer, frames);
+    onMessage(socket, defer, frames);
     clearTimeout(timeout);
     timeout = null;
   });
