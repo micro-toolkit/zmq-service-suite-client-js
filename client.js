@@ -3,6 +3,7 @@ var Q = require('q'),
     uuid = require('uuid'),
     _ = require('lodash'),
     errors = require('./config/errors'),
+    metric = require('./metric'),
     Message = require('zmq-service-suite-message'),
     Logger = require('logger-facade-nodejs'),
     log = Logger.getLogger('micro.client');
@@ -55,6 +56,10 @@ function onMessage(socket, dfd, frames) {
   frames.unshift(socket.identity);
 
   var msg = Message.parse(frames);
+
+  // metrics will add a metric header to the message
+  msg = metric.end(msg);
+
   log.info(msg, "Received REP with id %s from %s:%s#%s with status %s", msg.rid,
       msg.address.sid, msg.address.sversion, msg.address.verb, msg.status);
 
@@ -86,11 +91,18 @@ function sendMessage(socket, dfd, verb, payload, options){
     message.status = error.code;
     message.payload = error;
     message.type = Message.Type.REP;
+
+    // metrics will add a metric header to the message
+    message = metric.end(message);
+
     log.info(message, "REP to %s:%s#%s with id %s ended with timeout after %s ms!",
       message.address.sid, message.address.sversion, message.address.verb, message.rid,
       options.timeout);
     dfd.reject(message.payload);
   }, options.timeout);
+
+  // metrics will add a metric header to the message
+  message = metric.start(message);
 
   log.info(message, "Sending REQ with id %s to %s:%s#%s", message.rid,
     message.address.sid, message.address.sversion, message.address.verb);
