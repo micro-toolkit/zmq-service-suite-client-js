@@ -142,7 +142,7 @@ describe('ZSS Client', function() {
           expect(msg.address.sid).toEqual(config.sid.toUpperCase());
           expect(msg.address.verb).toEqual('FOO');
           expect(msg.payload).toEqual(payload);
-          expect(msg.headers).toEqual(headers);
+          expect(msg.headers.header).toEqual(headers.header);
           done();
         },
         on: Function.apply(),
