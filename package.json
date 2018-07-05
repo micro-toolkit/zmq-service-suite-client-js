@@ -4,8 +4,8 @@
   "description": "0MQ Service oriented Suite Client",
   "main": "client.js",
   "scripts": {
-    "pretest": "grunt jshint",
-    "test": "grunt test"
+    "pretest": "grunt jshint --force",
+    "test": "grunt test --force"
   },
   "repository": {
     "type": "git",
