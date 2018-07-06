@@ -49,6 +49,6 @@
     "zmq-service-suite-message": "0.1.0"
   },
   "engines": {
-    "node": ">=0.10.28"
+    "node": ">=4"
   }
 }
