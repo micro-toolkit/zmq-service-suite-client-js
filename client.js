@@ -1,5 +1,5 @@
 var Q = require('q'),
-    zmq = require('zmq'),
+    zmq = require('zeromq'),
     uuid = require('uuid'),
     _ = require('lodash'),
     errors = require('./config/errors'),

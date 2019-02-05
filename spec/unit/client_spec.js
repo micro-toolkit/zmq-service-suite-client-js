@@ -3,7 +3,7 @@ jasmine.getEnv().defaultTimeoutInterval = 2000;
 describe('ZSS Client', function() {
   var Client = require('../../client');
   var errors = require('../../config/errors');
-  var zmq = require('zmq');
+  var zmq = require('zeromq');
   var uuid = require('uuid');
   var Message = require('zmq-service-suite-message');
   var Q = require('q');
