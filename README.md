@@ -2,8 +2,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/76fcc7af81beff4ed597/maintainability)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/76fcc7af81beff4ed597/test_coverage)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/test_coverage)
 [![Issue Count](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/badges/issue_count.svg)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
-[![Dependency Status](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js.svg)](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js)
-![Grunt](https://cdn.gruntjs.com/builtwith.png)
 
 ## ZMQ Service Oriented Suite - Node-js Client
 
