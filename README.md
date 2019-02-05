@@ -2,8 +2,6 @@
 [![Code Climate](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
 [![Coverage](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/coverage.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
 [![Issue Count](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/badges/issue_count.svg)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
-[![Dependency Status](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js.svg)](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js)
-![Grunt](https://cdn.gruntjs.com/builtwith.png)
 
 ## ZMQ Service Oriented Suite - Node-js Client
 
