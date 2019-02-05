@@ -3,7 +3,7 @@ jasmine.getEnv().defaultTimeoutInterval = 2000;
 describe('ZSS Client Integration', function() {
   var Client = require('../../client');
 
-  var zmq = require('zmq'),
+  var zmq = require('zeromq'),
       _ = require('lodash'),
       Message = require('zmq-service-suite-message');
 
