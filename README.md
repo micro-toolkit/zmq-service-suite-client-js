@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js.svg?branch=master)](https://travis-ci.org/micro-toolkit/zmq-service-suite-client-js)
-[![Code Climate](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
-[![Coverage](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/coverage.png)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
+[![Maintainability](https://api.codeclimate.com/v1/badges/76fcc7af81beff4ed597/maintainability)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/76fcc7af81beff4ed597/test_coverage)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/test_coverage)
 [![Issue Count](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js/badges/issue_count.svg)](https://codeclimate.com/github/micro-toolkit/zmq-service-suite-client-js)
 [![Dependency Status](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js.svg)](https://gemnasium.com/micro-toolkit/zmq-service-suite-client-js)
 ![Grunt](https://cdn.gruntjs.com/builtwith.png)
