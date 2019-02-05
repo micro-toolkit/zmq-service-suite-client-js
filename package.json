@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/micro-toolkit/zmq-service-suite-client-js",
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
     "grunt-bump": "^0.8.0",
-    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-env": "~0.4.4",
     "grunt-jasmine-node-coverage-validation": "0.0.4",
@@ -41,12 +41,12 @@
     "logger-facade-nodejs": "^2.0.0"
   },
   "dependencies": {
-    "lodash": "^4.14.0",
-    "moment": "^2.21.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "q": "^1.4.1",
-    "uuid": "^3.0.1",
-    "zmq": "2.15.x",
-    "zmq-service-suite-message": "^0.1.1"
+    "uuid": "^3.3.2",
+    "zeromq": "^5.1.0",
+    "zmq-service-suite-message": "^1.0.0"
   },
   "engines": {
     "node": ">=4"
