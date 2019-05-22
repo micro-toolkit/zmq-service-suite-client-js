@@ -127,11 +127,11 @@ function call(config, verb, payload, options) {
   var timeout;
 
   socket.on('message', function(){
+    clearTimeout(timeout);
+    timeout = null;
     var frames = _.toArray(arguments);
     var defer = dfd;
     onMessage(socket, defer, frames);
-    clearTimeout(timeout);
-    timeout = null;
   });
 
   socket.on('error', function(error){
