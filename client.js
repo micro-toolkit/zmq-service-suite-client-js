@@ -87,6 +87,12 @@ function sendMessage(socket, dfd, verb, payload, options){
   message.payload = payload;
 
   var timeout = setTimeout(function() {
+    if (!dfd.promise.isPending()) {
+      log.warn(message, "Detected uncleared timeout for ended request %s:%s#%s with id %s after %s ms!",
+        message.address.sid, message.address.sversion, message.address.verb, message.rid,
+        options.timeout);
+      return;
+    }
     var error = errors["599"];
     message.status = error.code;
     message.payload = error;
