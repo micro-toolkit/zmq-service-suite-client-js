@@ -79,6 +79,27 @@ function onMessage(socket, dfd, frames) {
   dfd.reject(error);
 }
 
+function onTimeout(dfd, message, options) {
+  if (!dfd.promise.isPending()) {
+    log.warn(message, "Detected uncleared timeout for ended request %s:%s#%s with id %s after %s ms!",
+      message.address.sid, message.address.sversion, message.address.verb, message.rid,
+      options.timeout);
+    return;
+  }
+  var error = errors["599"];
+  message.status = error.code;
+  message.payload = error;
+  message.type = Message.Type.REP;
+
+  // metrics will add a metric header to the message
+  message = metric.end(message);
+
+  log.info(message, "REP to %s:%s#%s with id %s ended with timeout after %s ms!",
+    message.address.sid, message.address.sversion, message.address.verb, message.rid,
+    options.timeout);
+  dfd.reject(message.payload);
+}
+
 function sendMessage(socket, dfd, verb, payload, options){
   var message = new Message(
     options.sid.toUpperCase(), verb.toUpperCase(),
@@ -86,20 +107,7 @@ function sendMessage(socket, dfd, verb, payload, options){
 
   message.payload = payload;
 
-  var timeout = setTimeout(function() {
-    var error = errors["599"];
-    message.status = error.code;
-    message.payload = error;
-    message.type = Message.Type.REP;
-
-    // metrics will add a metric header to the message
-    message = metric.end(message);
-
-    log.info(message, "REP to %s:%s#%s with id %s ended with timeout after %s ms!",
-      message.address.sid, message.address.sversion, message.address.verb, message.rid,
-      options.timeout);
-    dfd.reject(message.payload);
-  }, options.timeout);
+  var timeout = setTimeout(onTimeout, options.timeout, dfd, message, options);
 
   // metrics will add a metric header to the message
   message = metric.start(message);
